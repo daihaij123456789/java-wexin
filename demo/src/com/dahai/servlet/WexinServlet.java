@@ -52,16 +52,21 @@ public class WexinServlet extends HttpServlet {
 			String content=map.get("Content");
 			
 			String message=null;
-			if("text".equals(msgType)){
-				TextMessage text=new TextMessage();
-				text.setFromUserName(toUsername);
-				text.setToUserName(fromUserName);
-				text.setMsgType("text");
-				text.setCreateTime(new Date().getTime());
-				text.setContent("你发送的消息是"+content);
-				message=MessageUtil.textMessageToXml(text);
-				//System.out.println("message");
+			if(MessageUtil.MESSAGE_TEXT.equals(msgType)){
+				if ("1".equals(content)) {
+					message=MessageUtil.initText(toUsername, fromUserName, MessageUtil.fristMenu());
+				}else if("2".equals(content)){
+					message=MessageUtil.initText(toUsername, fromUserName, MessageUtil.secondMenu());
+				}else if("?".equals(content)||"？".equals(content)){
+					message=MessageUtil.initText(toUsername, fromUserName, MessageUtil.menuText());
+				}
+			}else if(MessageUtil.MESSAGE_EVENT.equals(msgType)){
+				String eventType=map.get("Event");
+				if(MessageUtil.MESSAGE_SUBSCRIBE.equals(eventType)){
+					message=MessageUtil.initText(toUsername, fromUserName, MessageUtil.menuText());
+				}
 			}
+			//System.out.println("message");
 			out.print(message);
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
