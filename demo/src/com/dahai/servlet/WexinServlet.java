@@ -57,6 +57,8 @@ public class WexinServlet extends HttpServlet {
 					message=MessageUtil.initText(toUsername, fromUserName, MessageUtil.fristMenu());
 				}else if("2".equals(content)){
 					message=MessageUtil.initNewsMessage(toUsername, fromUserName);
+				}else if("3".equals(content)){
+					message=MessageUtil.initImageMessage(toUsername, fromUserName);
 				}else if("?".equals(content)||"£¿".equals(content)){
 					message=MessageUtil.initText(toUsername, fromUserName, MessageUtil.menuText());
 				}

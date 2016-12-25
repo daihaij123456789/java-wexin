@@ -15,6 +15,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.dahai.po.Image;
+import com.dahai.po.ImageMessage;
 import com.dahai.po.News;
 import com.dahai.po.NewsMessage;
 import com.dahai.po.TextMessage;
@@ -113,6 +115,14 @@ public class MessageUtil {
 			return xstream.toXML(newsMessage);
 		}
 		/*
+		 * Map(图片消息)转化为xml
+		 */
+		public static String imageMessageToXml(ImageMessage imageMessage){
+			XStream xstream=new XStream();
+			xstream.alias("xml", imageMessage.getClass());
+			return xstream.toXML(imageMessage);
+		}
+		/*
 		 *拼接图文消息
 		 *
 		 */
@@ -138,4 +148,21 @@ public class MessageUtil {
 	  		message=newsMessageToXml(newsMessage);
 	  		return message;
 	  	}
+	  	/*
+		 *拼接图片消息
+		 *
+		 */
+	  	public static String initImageMessage(String toUserName,String fromUserName){
+			String message = null;
+			Image image = new Image();
+			image.setMediaId("bhppaBBnWnJtNqOFlM6v5zY51V-dT8fJ2a1rcD0BXYgezlZDm2DVW6Xpx5Mj8KWm");
+			ImageMessage imageMessage = new ImageMessage();
+			imageMessage.setFromUserName(toUserName);
+			imageMessage.setToUserName(fromUserName);
+			imageMessage.setMsgType(MESSAGE_IMAGE);
+			imageMessage.setCreateTime(new Date().getTime());
+			imageMessage.setImage(image);
+			message = imageMessageToXml(imageMessage);
+			return message;
+		}
 }
