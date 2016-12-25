@@ -171,9 +171,9 @@ public class WexinUtil {
 		JSONObject jsonObj = JSONObject.fromObject(result);
 		System.out.println(jsonObj);
 		String typeName = "media_id";
-		/*if(!"image".equals(type)){
+		if(!"image".equals(type)){
 			typeName = type + "_media_id";
-		}*/
+		}
 		String mediaId = jsonObj.getString(typeName);
 		return mediaId;
 	}

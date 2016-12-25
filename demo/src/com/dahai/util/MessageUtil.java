@@ -17,6 +17,8 @@ import org.dom4j.io.SAXReader;
 
 import com.dahai.po.Image;
 import com.dahai.po.ImageMessage;
+import com.dahai.po.Music;
+import com.dahai.po.MusicMessage;
 import com.dahai.po.News;
 import com.dahai.po.NewsMessage;
 import com.dahai.po.TextMessage;
@@ -26,6 +28,7 @@ import com.thoughtworks.xstream.XStream;
 public class MessageUtil {
 	public static String MESSAGE_TEXT="text";
 	public static String MESSAGE_NEWS="news";
+	public static String MESSAGE_MUSIC="music";
 	public static String MESSAGE_IMAGE="image";
 	public static String MESSAGE_VOICE="voice";
 	public static String MESSAGE_VIDEO="video";
@@ -123,6 +126,14 @@ public class MessageUtil {
 			return xstream.toXML(imageMessage);
 		}
 		/*
+		 * Map(音乐消息)转化为xml
+		 */
+		public static String musicMessageToXml(MusicMessage musicMessage){
+			XStream xstream=new XStream();
+			xstream.alias("xml", musicMessage.getClass());
+			return xstream.toXML(musicMessage);
+		}
+		/*
 		 *拼接图文消息
 		 *
 		 */
@@ -163,6 +174,27 @@ public class MessageUtil {
 			imageMessage.setCreateTime(new Date().getTime());
 			imageMessage.setImage(image);
 			message = imageMessageToXml(imageMessage);
+			return message;
+		}
+	  	/*
+		 *拼接音乐消息
+		 *
+		 */
+	  	public static String initMusicMessage(String toUserName,String fromUserName){
+			String message = null;
+			Music music = new Music();
+			music.setThumbMediaId("5qjCLZNsznI4JRg9ytkmQKZSFB4djIZQUfocuQzS5KHaE1hy_iom8zidC_9UasgS");
+			music.setTitle("see you again");
+			music.setDescription("速度与激情7片尾曲");
+			music.setMusicUrl("http://dahai.tunnel.qydev.com/demo/resource/See.mp3");
+			music.setHQMusicUrl("http://dahai.tunnel.qydev.com/demo/resource/See.mp3");
+			MusicMessage musicMessage = new MusicMessage();
+			musicMessage.setFromUserName(toUserName);
+			musicMessage.setToUserName(fromUserName);
+			musicMessage.setMsgType(MESSAGE_MUSIC);
+			musicMessage.setCreateTime(new Date().getTime());
+			musicMessage.setMusic(music);
+			message = musicMessageToXml(musicMessage);
 			return message;
 		}
 }

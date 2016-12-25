@@ -10,8 +10,8 @@ public class WexinTest {
 			System.out.println("票据"+token.getToken());
 			System.out.println("有效时间"+token.getExpiresIn());
 			
-			String path = "D:/imooc.jpg";
-			String mediaId = WexinUtil.upload(path, token.getToken(), "image");
+			String path = "D:/imooc1.jpg";
+			String mediaId = WexinUtil.upload(path, token.getToken(), "thumb");
 			System.out.println(mediaId);
 			
 			//String result = WexinUtil.translate("my name is laobi");
