@@ -33,12 +33,14 @@ public class MessageUtil {
 	public static String MESSAGE_VOICE="voice";
 	public static String MESSAGE_VIDEO="video";
 	public static String MESSAGE_LINK="link";
+	//注意微信开发文档有错，地理位置类型是location;
 	public static String MESSAGE_LOCATION="location";
 	public static String MESSAGE_EVENT="event";
 	public static String MESSAGE_SUBSCRIBE="subscribe";
 	public static String MESSAGE_UNSUBSCRIBE="unsubscribe";
 	public static String MESSAGE_CLICK="CLICK";
-	public static String MESSAGE_VIEM="VIEM";
+	public static String MESSAGE_VIEW="VIEW";
+	public static String MESSAGE_SCANCODE="scancode_push";
 	
 	
 	
