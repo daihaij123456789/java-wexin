@@ -28,6 +28,10 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import com.dahai.menu.Button;
+import com.dahai.menu.ClickButton;
+import com.dahai.menu.Menu;
+import com.dahai.menu.ViewButton;
 import com.dahai.po.AccessToken;
 /*
 import com.dahai.menu.Button;
@@ -45,10 +49,16 @@ import com.dahai.trans.TransResult;*/
  */
 public class WexinUtil {
 	private static final String PREFIX="https://api.weixin.qq.com/cgi-bin";
+	//测试号信息
 	private static final String APPID="wx9226474d248fd396";
 	private static final String APPSECRET="e022d368d3010321e9af508dac8c66da";
+	//票据接口
 	private static final String ACCESS_TOKEN_URL = PREFIX+"/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
+	//消息接口
 	private static final String UPLOAD_URL =PREFIX+ "/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
+	//菜单接口
+	private static final String CREATE_MENU_URL=PREFIX+"/menu/create?access_token=ACCESS_TOKEN";
+
 	public static JSONObject doGetStr(String url) throws ParseException, IOException{
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(url);
@@ -177,7 +187,52 @@ public class WexinUtil {
 		String mediaId = jsonObj.getString(typeName);
 		return mediaId;
 	}
+/*
+ * 组装菜单
+ * @return
+ */
+	public static Menu initMenu(){
+		Menu menu=new Menu();
+		ClickButton button11=new ClickButton();
+		button11.setName("click菜单");
+		button11.setType("click");
+		button11.setKey("11");
+		
+		ViewButton button21=new ViewButton();
+		button21.setName("view 菜单");
+		button21.setType("view");
+		button21.setUrl("http://www.imooc.com");
+		
+		ClickButton button31=new ClickButton();
+		button31.setName("扫描菜单");
+		button31.setType("scancode_push");
+		button31.setKey("31");
+		
+		ClickButton button41=new ClickButton();
+		button41.setName("地理位置");
+		button41.setType("location_select");
+		button41.setKey("41");
+		
+		Button button =new Button();
+		button.setName("菜单");
+		button.setSub_button(new Button[]{button31,button41});
+		
+		menu.setButton(new Button[]{button11,button21,button});
+		return menu;
+	}
 
-
+	/*
+	 * 获取接口
+	 * @return
+	 */
+	public static int createMenu(String token,String menu) throws ParseException, IOException{
+		int result=0;
+		String url=CREATE_MENU_URL.replace("ACCESS_TOKEN", token);
+		JSONObject jsonObject=doPostStr(url, menu);
+		if (jsonObject  !=null) {
+			result=jsonObject.getInt("errcode");
+		}
+		return result;
+	}
 }
 	
