@@ -15,13 +15,27 @@ public class WexinTest {
 			//String path = "D:/imooc1.jpg";
 			//String mediaId = WexinUtil.upload(path, token.getToken(), "thumb");
 			//System.out.println(mediaId);
+			
+			
 			String menu=JSONObject.fromObject(WexinUtil.initMenu()).toString();	
 			int result=WexinUtil.createMenu(token.getToken(), menu);
+			
 			if (result==0) {
 				System.out.println("创建菜单成功");
 			}else{
 				System.out.println("错误码"+result);
 			}
+			
+			
+			//JSONObject jsonObject=WexinUtil.queryMenu(token.getToken());
+			//System.out.println(jsonObject);
+			
+			/*int result=WexinUtil.deleteMenu(token.getToken());
+			if(result==0){
+				System.out.println("删除成功");
+			}else{
+				System.out.println("错误码"+result);
+			}*/
 			//String result = WexinUtil.translate("my name is laobi");
 			//String result = WeixinUtil.translateFull("");
 			//System.out.println(result);

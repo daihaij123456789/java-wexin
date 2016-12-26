@@ -56,9 +56,12 @@ public class WexinUtil {
 	private static final String ACCESS_TOKEN_URL = PREFIX+"/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 	//消息接口
 	private static final String UPLOAD_URL =PREFIX+ "/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
-	//菜单接口
+	//菜单推送接口
 	private static final String CREATE_MENU_URL=PREFIX+"/menu/create?access_token=ACCESS_TOKEN";
-
+	//菜单查询接口
+	private static final String QUERY_MENU_URL=PREFIX+"/menu/get?access_token=ACCESS_TOKEN";
+	//菜单删除接口
+	private static final String DELETE_MENU_URL=PREFIX+"/menu/delete?access_token=ACCESS_TOKEN";
 	public static JSONObject doGetStr(String url) throws ParseException, IOException{
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(url);
@@ -222,7 +225,7 @@ public class WexinUtil {
 	}
 
 	/*
-	 * 获取接口
+	 * 获取菜单与推送接口
 	 * @return
 	 */
 	public static int createMenu(String token,String menu) throws ParseException, IOException{
@@ -230,6 +233,28 @@ public class WexinUtil {
 		String url=CREATE_MENU_URL.replace("ACCESS_TOKEN", token);
 		JSONObject jsonObject=doPostStr(url, menu);
 		if (jsonObject  !=null) {
+			result=jsonObject.getInt("errcode");
+		}
+		return result;
+	}
+	/*
+	 * 获取查询菜单
+	 * @return
+	 */
+	public static JSONObject queryMenu(String token) throws ParseException, IOException{
+		String url=QUERY_MENU_URL.replace("ACCESS_TOKEN", token);
+		JSONObject jsonObject=doGetStr(url);
+		return jsonObject;
+	}
+	/*
+	 * 删除查询菜单
+	 * @return
+	 */
+	public static int deleteMenu(String token) throws ParseException, IOException{
+		int result=0;
+		String url=DELETE_MENU_URL.replace("ACCESS_TOKEN", token);
+		JSONObject jsonObject=doGetStr(url);
+		if (jsonObject!=null) {
 			result=jsonObject.getInt("errcode");
 		}
 		return result;
